@@ -9,7 +9,6 @@ const Signup = () => {
   const [state, formAction] = useFormState(createUser, {
     error: { email: "", password: "", server: "" },
   });
-  console.log("state", state);
 
   return (
     <form action={formAction} className="w-full max-w-xs">

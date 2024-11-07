@@ -1,4 +1,5 @@
 export const getErrorMessage = (response: any) => {
+  console.log("response", response);
   if (response.message) {
     if (Array.isArray(response.message)) {
       return formatFieldErrorMessage(response.message[0]);
