@@ -1,3 +1,12 @@
+export interface FormErrorFields {
+  email: string;
+  password: string;
+  server: string;
+}
+export interface FormError {
+  error: FormErrorFields;
+}
+
 export const getErrorMessage = (response: any) => {
   console.log("response", response);
   if (response.message) {
@@ -21,7 +30,7 @@ const formatServerError = (message: string) => {
 const formatFieldErrorMessage = (message: {
   property: string;
   message: string;
-}) => {
+}): FormErrorFields => {
   let errorObject = {
     email: "",
     password: "",
