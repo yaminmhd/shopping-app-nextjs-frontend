@@ -7,7 +7,14 @@ import createUser from "./create-user";
 
 const Signup = () => {
   const [state, formAction] = useFormState(createUser, {
-    error: { email: "", password: "", server: "" },
+    error: {
+      email: "",
+      password: "",
+      name: "",
+      description: "",
+      price: "",
+      server: "",
+    },
   });
 
   return (

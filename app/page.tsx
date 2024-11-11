@@ -1,7 +1,10 @@
-import getMe from "./get-me";
+"use client";
+import CreateProductFab from "./products/create-product-fab";
 
-export default async function Home() {
-  const me = await getMe();
-  console.log(me);
-  return <></>;
+export default function Home() {
+  return (
+    <>
+      <CreateProductFab />
+    </>
+  );
 }

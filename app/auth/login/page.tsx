@@ -8,7 +8,14 @@ import login from "./login";
 
 const Login = () => {
   const [state, formAction] = useFormState(login, {
-    error: { email: "", password: "", server: "" },
+    error: {
+      email: "",
+      password: "",
+      name: "",
+      description: "",
+      price: "",
+      server: "",
+    },
   });
   return (
     <form action={formAction} className="w-full max-w-xs">

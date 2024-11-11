@@ -25,7 +25,16 @@ export const post = async (
     callbackFn(response);
   }
 
-  return { response, error: { email: "", password: "", server: "" } };
+  return {
+    error: {
+      email: "",
+      password: "",
+      name: "",
+      description: "",
+      price: "",
+      server: "",
+    },
+  };
 };
 
 export const get = async (path: string) => {

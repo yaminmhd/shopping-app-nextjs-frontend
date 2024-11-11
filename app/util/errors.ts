@@ -1,6 +1,9 @@
 export interface FormErrorFields {
   email: string;
   password: string;
+  name: string;
+  description: string;
+  price: string;
   server: string;
 }
 export interface FormError {
@@ -23,34 +26,48 @@ const formatServerError = (message: string) => {
   return {
     email: "",
     password: "",
+    name: "",
+    description: "",
+    price: "",
     server: message,
   };
+};
+
+const generateErrorObject = (property: string, message: string) => {
+  let errorObject = {
+    email: "",
+    password: "",
+    name: "",
+    description: "",
+    price: "",
+    server: "",
+  };
+  errorObject = {
+    ...errorObject,
+    [property]: message.charAt(0).toUpperCase() + message.slice(1),
+  };
+  return errorObject;
 };
 
 const formatFieldErrorMessage = (message: {
   property: string;
   message: string;
 }): FormErrorFields => {
-  let errorObject = {
-    email: "",
-    password: "",
-    server: "",
-  };
-
-  if (message.property === "password") {
-    errorObject = {
-      ...errorObject,
-      password:
-        message.message.charAt(0).toUpperCase() + message.message.slice(1),
-    };
+  switch (message.property) {
+    case "password":
+    case "email":
+    case "name":
+    case "description":
+    case "price":
+      return generateErrorObject(message.property, message.message);
+    default:
+      return {
+        email: "",
+        password: "",
+        name: "",
+        description: "",
+        price: "",
+        server: "",
+      };
   }
-
-  if (message.property === "email") {
-    errorObject = {
-      ...errorObject,
-      email: message.message.charAt(0).toUpperCase() + message.message.slice(1),
-    };
-  }
-
-  return errorObject;
 };
