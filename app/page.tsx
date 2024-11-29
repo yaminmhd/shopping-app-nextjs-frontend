@@ -1,10 +1,12 @@
-"use client";
-import CreateProductFab from "./products/create-product-fab";
+import CreateProductFab from "./products/create-product/create-product-fab";
+import Products from "@/app/products/products";
 
-export default function Home() {
+export default async function Home() {
+
   return (
     <>
-      <CreateProductFab />
+      <Products/>
+      <CreateProductFab/>
     </>
   );
 }

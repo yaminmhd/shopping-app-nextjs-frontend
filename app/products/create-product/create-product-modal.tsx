@@ -1,9 +1,11 @@
 "use client";
 
-import { Modal, Box, Button, TextField, Stack } from "@mui/material";
-import React, { useState } from "react";
-import createProduct from "./create-product";
-import { FormError } from "../util/errors";
+import {Box, Button, Modal, Stack, TextField} from "@mui/material";
+import React, {CSSProperties, useState} from "react";
+import createProduct from "../actions/create-product";
+import {FormError} from "../../util/errors";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import Typography from "@mui/material/Typography";
 
 const styles = {
   position: "absolute",
@@ -17,17 +19,32 @@ const styles = {
   p: 4,
 };
 
+
+const fileInputStyles: CSSProperties = {
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: "1",
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1
+}
+
 interface CreateProductFabProps {
   open: boolean;
   handleClose: () => void;
 }
 
-const CreateProductModal = ({ open, handleClose }: CreateProductFabProps) => {
+const CreateProductModal = ({open, handleClose}: CreateProductFabProps) => {
   const [response, setResponse] = useState<FormError>();
+  const [fileName, setFileName] = useState("");
 
   const onClose = () => {
     setResponse(undefined);
     handleClose();
+    setFileName("");
   };
 
   return (
@@ -68,6 +85,13 @@ const CreateProductModal = ({ open, handleClose }: CreateProductFabProps) => {
               helperText={response?.error.price}
               error={!!response?.error.price}
             />
+            <Button component="label" variant="outlined" startIcon={<CloudUploadIcon/>}>
+              Upload File
+              <input type="file" name="image" style={fileInputStyles}
+                     onChange={(e) => e.target.files && setFileName(e.target.files[0].name
+                     )}></input>
+            </Button>
+            <Typography>{fileName}</Typography>
             <Button type="submit" variant="contained">
               Submit
             </Button>

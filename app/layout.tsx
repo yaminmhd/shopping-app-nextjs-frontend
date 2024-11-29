@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
+import type {Metadata} from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Container, CssBaseline } from "@mui/material";
+import {Container, CssBaseline} from "@mui/material";
 
 import Header from "./header/header";
 import Providers from "./providers";
-import authenticated from "./auth/authenticated";
+import authenticated from "./auth/actions/authenticated";
 import logout from "./auth/logout";
 
 const geistSans = localFont({
@@ -25,23 +25,23 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({
-  children,
-}: Readonly<{
+                                           children,
+                                         }: Readonly<{
   children: React.ReactNode;
 }>) {
   const isAuthenticated = await authenticated();
 
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Providers authenticated={isAuthenticated}>
-          <CssBaseline />
-          <Header logout={logout} />
-          <Container>{children}</Container>
-        </Providers>
-      </body>
+    <body
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+    >
+    <Providers authenticated={isAuthenticated}>
+      <CssBaseline/>
+      <Header logout={logout}/>
+      <Container className={isAuthenticated ? "mt-10" : ""}>{children}</Container>
+    </Providers>
+    </body>
     </html>
   );
 }
