@@ -19,7 +19,7 @@ const Login = () => {
   });
   return (
     <form action={formAction} className="w-full max-w-xs">
-      {!!state.error.server && (
+      {state.error.server !== "" && (
         <Alert severity="error">{state.error.server}</Alert>
       )}
       <Stack spacing={2}>
