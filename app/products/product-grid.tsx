@@ -17,7 +17,7 @@ export default function ProductsGrid({products}: ProductGridProps) {
   useEffect(() => {
     let socket: Socket;
     const createSocket = async () => {
-      const socket = io(API_URL!, {
+      socket = io(API_URL!, {
         auth: {
           Authentication: await getAuthentication()
         }
