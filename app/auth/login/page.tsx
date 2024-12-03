@@ -7,16 +7,7 @@ import { useFormState } from "react-dom";
 import login from "./login";
 
 const Login = () => {
-  const [state, formAction] = useFormState(login, {
-    error: {
-      email: "",
-      password: "",
-      name: "",
-      description: "",
-      price: "",
-      server: "",
-    },
-  });
+  const [state, formAction] = useFormState(login, {error: {client: {email: "", password: ""}, server: ""}});
   return (
     <form action={formAction} className="w-full max-w-xs">
       {state.error.server !== "" && (
@@ -28,16 +19,16 @@ const Login = () => {
           label="Email"
           variant="outlined"
           type="email"
-          helperText={state.error.email}
-          error={!!state.error.email}
+          helperText={state.error.client.email}
+          error={!!state.error.client.email}
         />
         <TextField
           name="password"
           label="Password"
           variant="outlined"
           type="password"
-          helperText={state.error.password}
-          error={!!state.error.password}
+          helperText={state.error.client.password}
+          error={!!state.error.client.password}
         />
         <Button type="submit" variant="contained">
           Login

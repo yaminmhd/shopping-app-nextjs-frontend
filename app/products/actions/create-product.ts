@@ -7,7 +7,7 @@ import {API_URL} from "@/app/constants/api";
 export default async function createProduct(formData: FormData) {
   const response = await post("products", formData);
   const productImage = formData.get("image")
-  if(productImage instanceof File && !Object.values(response.error).some(Boolean)) {
+  if(productImage instanceof File && !response.error) {
     await uploadProductImage(response.data.id, productImage);
   }
   revalidateTag("products");

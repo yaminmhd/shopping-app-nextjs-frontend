@@ -1,16 +1,35 @@
 "use server";
 
-import { FormError } from "@/app/util/errors";
+import {FormError, parseClientFormError} from "@/app/util/errors";
 import { post } from "@/app/util/fetch";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import { AUTHENTICATION_COOKIE } from "../auth-cookie";
+import {z} from "zod";
 
 export default async function login(_prevState: FormError, formData: FormData) {
-  const { error } = await post("auth/login", formData, setAuthCookie);
-  if (!Object.values(error).every((value) => value === "")) {
-    return { error };
+  const schema = z.object({
+    email: z.string().min(1, {message: "Email is required"}).email(),
+    password: z.string().min(1, {message: "Password is required"})
+  })
+
+  const loginValidationResponse = schema.safeParse({
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
+
+  if (!loginValidationResponse.success) {
+    return parseClientFormError(loginValidationResponse.error.errors);
+  }
+  const { error: serverErrorMessage } = await post("auth/login", formData, setAuthCookie);
+  if (serverErrorMessage) {
+    return {
+      error: {
+        client: {email: "", password: ""},
+        server: serverErrorMessage
+      }
+    };
   }
   redirect("/");
 }

@@ -20,6 +20,7 @@ const Product = ({product}: ProductProps) => {
           <Typography variant="h4">{product.name}</Typography>
           {product.imageExists && (
             <Image
+              priority={true}
               src={getProductImage(product.id)}
               width="0"
               height="0"

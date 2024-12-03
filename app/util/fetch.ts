@@ -18,8 +18,9 @@ export const post = async (
     body: JSON.stringify(body),
   });
   const parsedResponse = await response.json();
+
   if (!response.ok) {
-    return {error: getErrorMessage(parsedResponse)};
+    return {error: getErrorMessage(parsedResponse), data: undefined};
   }
 
   if (callbackFn) {
@@ -27,21 +28,13 @@ export const post = async (
   }
 
   return {
-    error: {
-      email: "",
-      password: "",
-      name: "",
-      description: "",
-      price: "",
-      server: "",
-    },
+    error: "",
     data: parsedResponse
   };
 };
 
 export const get = async <T>(path: string, tags?: string[], params?: URLSearchParams) => {
   const url = params ? `${API_URL}/${path}?${params}` : `${API_URL}/${path}`;
-  console.log(url);
   const response = await fetch(url, {
     headers: {...getHeaders()},
     next: {
